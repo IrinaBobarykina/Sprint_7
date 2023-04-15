@@ -3,5 +3,5 @@
 /workspace.xml
 .idea
 .build
-.target
+/target
 
