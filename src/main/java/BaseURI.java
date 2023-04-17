@@ -1,2 +1,3 @@
-package PACKAGE_NAME;public class BaseURI {
+public class BaseURI {
+    public static final String BASE_URI = "https://qa-scooter.praktikum-services.ru/";;
 }

@@ -9,6 +9,11 @@ public class Courier {
         this.firstName = firstName;
     }
 
+    public Courier(String login, String password) {
+        this.password = login;
+        this.firstName = password;
+    }
+
     public String getLogin() {
         return login;
     }
