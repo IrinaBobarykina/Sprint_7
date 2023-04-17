@@ -1,6 +1,8 @@
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
+    String track;
     private final List<String> color;
 
     public CreateOrderTest(List<String> color) {
@@ -34,22 +37,21 @@ public class CreateOrderTest {
         RestAssured.baseURI = BaseURI.BASE_URI;
     }
 
-    //по-хорошему еще нужно доавбить After для удаления заказа
+    @After
+    public void tearDown() {
+        OrderOperations.cancelOrder(track);
+    }
 
     @Test
     @DisplayName("Create an order using different scooter colors")
     public void createOrderWithDifferentColorsGetSuccess() {
         Order order = new Order("Ирина", "Бобарыкина", "Торжковская 15", "Чёрная речка", "89123456789", 5, "2023-04-23", "Позвонить за час до доставки", color);
-        given()
-                .header("Content-type", "application/json")
-                .and()
-                .body(order)
-                .when()
-                .post(APIs.ORDER_PATH)
-                .then()
+        Response response = OrderOperations.createOrder(order);
+                response.then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_CREATED)
                 .and()
                 .body("track", notNullValue());
+        track = response.then().extract().path("track").toString();
     }
 }

@@ -1,6 +1,7 @@
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +26,5 @@ public class GetOrderListTest {
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat()
                 .body("orders", notNullValue());
-
     }
 }
