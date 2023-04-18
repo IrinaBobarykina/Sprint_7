@@ -14,7 +14,6 @@ import utils.BaseURI;
 
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(Parameterized.class)
@@ -51,11 +50,13 @@ public class CreateOrderTest {
     public void createOrderWithDifferentColorsGetSuccess() {
         Order order = new Order("Ирина", "Бобарыкина", "Торжковская 15", "Чёрная речка", "89123456789", 5, "2023-04-23", "Позвонить за час до доставки", color);
         Response response = OrderOperations.createOrder(order);
-                response.then()
+        //track для последующего удаления заказа
+        track = response.then().extract().path("track").toString();
+        response.then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_CREATED)
                 .and()
                 .body("track", notNullValue());
-        track = response.then().extract().path("track").toString();
+
     }
 }

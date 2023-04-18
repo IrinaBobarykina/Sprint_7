@@ -2,6 +2,7 @@ import courier.Courier;
 import courier.CourierOperations;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.After;
@@ -38,12 +39,13 @@ public class CreateCourierTest {
     @DisplayName("Create a new courier using correct data")
     public void createNewCourierGetSuccessResponse() {
         courier = new Courier(login, password, firstName);
-        CourierOperations.createCourier(courier)
-                .then().assertThat().statusCode(HttpStatus.SC_CREATED)
+        Response response = CourierOperations.createCourier(courier);
+        //id нужен для последующего удаления курьера
+        id = CourierOperations.signInCourier(courier).then().extract().path("id").toString();
+        response.then().assertThat().statusCode(HttpStatus.SC_CREATED)
                 .and()
                 .body("ok", equalTo(true));
-        //id для последующего удаления курьера
-        id = CourierOperations.signInCourier(courier).then().extract().path("id").toString();
+
     }
 
     @Test
@@ -57,7 +59,6 @@ public class CreateCourierTest {
 
     }
 
-    //??? почему не пришлось создавать конструктор?
     @Test
     @DisplayName("Create a courier without a password")
     public void createCourierWithoutPasswordGetError() {
