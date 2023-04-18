@@ -25,7 +25,7 @@ public class CreateOrderTest {
         this.color = color;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Scooter color - {0}")
     public static Object[][] chooseColor() {
         return new Object[][]{
                 {List.of(OrderScooterColors.BLACK_COLOR)},
