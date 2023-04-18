@@ -1,5 +1,8 @@
+package courier;
+
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import utils.APIs;
 
 import static io.restassured.RestAssured.given;
 

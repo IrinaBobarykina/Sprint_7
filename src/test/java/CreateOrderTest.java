@@ -1,12 +1,16 @@
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import order.Order;
+import order.OrderOperations;
+import order.OrderScooterColors;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import utils.BaseURI;
 
 import java.util.List;
 
@@ -25,9 +29,9 @@ public class CreateOrderTest {
     @Parameterized.Parameters
     public static Object[][] chooseColor() {
         return new Object[][]{
-                {List.of(ScooterColors.BLACK_COLOR)},
-                {List.of(ScooterColors.GREY_COLOR)},
-                {List.of(ScooterColors.BLACK_COLOR, ScooterColors.GREY_COLOR)},
+                {List.of(OrderScooterColors.BLACK_COLOR)},
+                {List.of(OrderScooterColors.GREY_COLOR)},
+                {List.of(OrderScooterColors.BLACK_COLOR, OrderScooterColors.GREY_COLOR)},
                 {List.of()},
         };
     }

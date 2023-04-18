@@ -1,3 +1,5 @@
+package utils;
+
 public class APIs {
     public static final String COURIER_PATH = "/api/v1/courier";
     public static final String LOGIN_PATH = "/api/v1/courier/login";
